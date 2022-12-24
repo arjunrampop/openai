@@ -24,6 +24,8 @@ type ImageResponse struct {
 	} `json:"data"`
 }
 
+var OPENAI_API_KEY string
+
 func main() {
 	OPENAI_API_KEY := os.Getenv("API_KEY")
 
@@ -32,10 +34,13 @@ func main() {
 		panic("env not correct")
 	}
 
-	// var prompt string
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("Enter an imge description : ")
 	prompt, _ := reader.ReadString('\n')
+	GenerateImage(prompt)
+}
+
+func GenerateImage(prompt string) {
 
 	requestBody, err := json.Marshal(ImageRequest{
 		Prompt: prompt,
